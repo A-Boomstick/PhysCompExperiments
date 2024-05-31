@@ -210,7 +210,7 @@ void loop() {
       fruit_speed = (float)random(-(level-15),level-15) * 0.05;
     }
     
-    fruit_position = random(10,NUMPIXELS-fruit_size); //  Randomly choose a new position for the fruit
+    fruit_position_f = random(10,NUMPIXELS-fruit_size); //  Randomly choose a new position for the fruit
     delay(750);
 
     if(level == 1){
