@@ -23,7 +23,7 @@ LiquidCrystal_I2C lcd(0x27,20,4);
 //  Defining variables for numbers
 float fruit_position_f = 99;
 int fruit_size = 20;
-int level = 1;
+int level = 19;
 int ship_position = 1;
 int ship_speed = 1;
 int high_score = 0;
@@ -67,8 +67,7 @@ void setup() {
   strip.setBrightness(BRIGHTNESS);
 
   lcd.setCursor(3, 0);
-  lcd.print("Level ");
-  lcd.print(level);
+  lcd.print("Game Start!");
 
   pinMode(FIRE_BUTTON, INPUT_PULLUP); //  Tell the arduino that we are going to be reading this pin's value, and that the arduino should connect this pin to its built-in resistor. This means that we don't have to add in an extra resistor between the button and the arduino, as the arduino can do this for us.
 
