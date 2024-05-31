@@ -40,7 +40,7 @@ void drawline(int position, int size, uint32_t color){ // Function to draw a lin
 int trail_positions[] = {
   0,0,0,0
 };
-void trail(int position, int direction, int colortype){
+void trail(int position, int direction, int colortype){ // Tracks last few of ship's positions and fills with light that has less intensity
   int power = 128;
   for(int i=0; i<4; i++){
     strip.setPixelColor(trail_positions[i], strip.Color(power, 0,0));
@@ -82,7 +82,7 @@ void setup() {
 
 void loop() {  
   int fruit_position = (int)fruit_position_f;
-  if (ship_position == NUMPIXELS){
+  if (ship_position == NUMPIXELS){ // Causes ship to bounce and change direction when hitting edge
     ship_speed = -1;
     tone(9, 200);
     delay(50);
@@ -97,7 +97,7 @@ void loop() {
     delay(50);
   }
 
-  if (fruit_position + fruit_size == NUMPIXELS){
+  if (fruit_position + fruit_size == NUMPIXELS){ // Same as above but for fruit
     fruit_speed *= -1;
   }
   else if (fruit_position == 0){
@@ -106,20 +106,20 @@ void loop() {
 
 
   
-  ship_position += ship_speed;
+  ship_position += ship_speed; // This is what makes the ship and fruit move
   fruit_position_f += fruit_speed;
 
 
   uint32_t fruit_color = strip.Color(0, 255, 0);  //  Sets up the colour of the fruit as green. The colour is stored as a 32-bit unsigned integer (uint32_t)
 
   
-  if (level > 10 && ship_position<fruit_position && ship_position>fruit_position-2 && dodge > 0){
+  if (level > 10 && ship_position<fruit_position && ship_position>fruit_position-2 && dodge > 0){ // Dodge code for later levels
     drawline(fruit_position, fruit_size, 0);
     drawline(fruit_position-dodge, fruit_size, fruit_color);
     fruit_position_f -= (float)dodge;
     dodge = 0;
   }
-  else if(level > 10 && ship_position>fruit_position+fruit_size && ship_position<fruit_position+fruit_size+2 && dodge > 0){
+  else if(level > 10 && ship_position>fruit_position+fruit_size && ship_position<fruit_position+fruit_size+2 && dodge > 0){ // Dodge in different direction
     drawline(fruit_position, fruit_size, 0);
     drawline(fruit_position+dodge, fruit_size, fruit_color);
     fruit_position_f += (float)dodge;
@@ -144,15 +144,15 @@ void loop() {
   strip.setPixelColor(ship_position, ship_color);
 
   strip.show();
-  if(!digitalRead(FIRE_BUTTON)){
+  if(!digitalRead(FIRE_BUTTON)){ // Only triggers when button is hit
     if(ship_position>=fruit_position && ship_position < fruit_position+fruit_size){
-      int center = fruit_position + fruit_size/2;
+      int center = fruit_position + fruit_size/2; // These two lines calculate score gain based on accuracy
       int ship_accuracy = abs(ship_position - center); 
       drawline(0, NUMPIXELS, strip.Color(0,255,0));
       level++;
       ship_position = 1;
       current_score += fruit_size/2-ship_accuracy+level;
-      if (high_score < current_score){
+      if (high_score < current_score){ // Sets high-score
         high_score = current_score;
       }
       lcd.clear();
@@ -201,7 +201,7 @@ void loop() {
     if (level < 11){
       fruit_size = 20 - random(level, level+3); // Randomly generates a number to subtract, making it harder over time
     }
-    else if (level > 10){
+    else if (level > 10){ // Ensures no soft-locking or impossible levels
       fruit_size = random(4, 7);
     }
 
@@ -212,7 +212,7 @@ void loop() {
     fruit_position_f = random(10,NUMPIXELS-fruit_size); //  Randomly choose a new position for the fruit
     delay(750);
 
-    if(level == 1){
+    if(level == 1){ // Special tune for level 1
       tone(9, 293, 50);
       delay(100);
       tone(9, 349, 50);
@@ -220,7 +220,7 @@ void loop() {
       tone(9, 440, 50);
       delay(100);
     }
-    else if(level == 11){
+    else if(level == 11){ // Special tune for when tricks come into play
       tone(9, 466, 50);
       delay(100);
       tone(9, 440, 50);
