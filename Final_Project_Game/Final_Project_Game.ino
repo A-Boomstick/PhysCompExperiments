@@ -23,7 +23,7 @@ LiquidCrystal_I2C lcd(0x27,20,4);
 //  Defining variables for numbers
 float fruit_position_f = 99;
 int fruit_size = 20;
-int level = 19;
+int level = 1;
 int ship_position = 1;
 int ship_speed = 1;
 int high_score = 0;
@@ -97,10 +97,10 @@ void loop() {
     delay(50);
   }
 
-  if (fruit_position + fruit_size == NUMPIXELS){ // Same as above but for fruit
+  if (fruit_position + fruit_size >= NUMPIXELS){ // Same as above but for fruit
     fruit_speed *= -1;
   }
-  else if (fruit_position == 0){
+  else if (fruit_position <= 0){
     fruit_speed *= -1;
   }
 
